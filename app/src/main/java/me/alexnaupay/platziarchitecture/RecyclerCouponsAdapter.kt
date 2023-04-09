@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import me.alexnaupay.platziarchitecture.entities.Coupon
+import me.alexnaupay.platziarchitecture.view.CouponDetailActivity
 
 class RecyclerCouponsAdapter(var coupons : ArrayList<Coupon>, var resource: Int) : RecyclerView.Adapter<RecyclerCouponsAdapter.CardCouponHolder>() {
 

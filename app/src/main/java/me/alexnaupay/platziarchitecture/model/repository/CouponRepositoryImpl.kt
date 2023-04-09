@@ -1,31 +1,22 @@
-package me.alexnaupay.platziarchitecture
+package me.alexnaupay.platziarchitecture.model.repository
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.util.Log
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import me.alexnaupay.platziarchitecture.entities.Coupon
 import me.alexnaupay.platziarchitecture.model.ApiAdapter
+import me.alexnaupay.platziarchitecture.presenter.CouponPresenter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        //VIEW
-        val rvCoupons: RecyclerView = findViewById(R.id.rvCoupons) //UI
-        rvCoupons.layoutManager = LinearLayoutManager(this)
-        val coupons = ArrayList<Coupon>()
-        //VIEW
+class CouponRepositoryImpl(var couponPresenter: CouponPresenter): CouponRepository {
 
 
+    //TODA LA LÓGICA DE CONEXIÓN
+    override fun getCoupunsAPI() {
         //CONTROLLER
+        var coupons: ArrayList<Coupon>? = ArrayList<Coupon>()
         val apiAdapter = ApiAdapter()
         val apiService = apiAdapter.getClientService()
         val call = apiService.getCoupons()
@@ -41,18 +32,24 @@ class MainActivity : AppCompatActivity() {
                 offersJsonArray?.forEach { jsonElement: JsonElement ->
                     var jsonObject = jsonElement.asJsonObject
                     var coupon = Coupon(jsonObject)
-                    if (coupon.image_url.isNotBlank()){
-                        coupons.add(coupon)
-                    }
-
+                    coupons?.add(coupon)
                 }
                 //VIEW
-                rvCoupons.adapter = RecyclerCouponsAdapter(coupons, R.layout.card_coupon)
-                //VIEW
+                if (coupons != null) {
+                    couponPresenter.showCoupons(coupons)
+                }
             }
+
+
 
 
         })
         //CONTROLLER
+
+
+
+
+        //couponPresenter.showCoupons()
     }
+
 }

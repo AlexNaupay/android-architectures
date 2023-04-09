@@ -1,4 +1,4 @@
-package me.alexnaupay.platziarchitecture
+package me.alexnaupay.platziarchitecture.view
 
 import android.content.Intent
 import android.net.Uri
@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import me.alexnaupay.platziarchitecture.R
 import me.alexnaupay.platziarchitecture.entities.Coupon
 
 class CouponDetailActivity : AppCompatActivity() {
