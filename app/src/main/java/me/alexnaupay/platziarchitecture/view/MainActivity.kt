@@ -18,34 +18,37 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity(), CouponView {
-    private var couponPresenter: CouponPresenter? = null
-    private var rvCoupons: RecyclerView? = null
+    private lateinit var couponPresenter: CouponPresenter
+    private lateinit var rvCoupons: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
 
+        // Presenter
         couponPresenter = CouponPresenterImpl(this)
+        couponPresenter.getCoupons()  // Get coupons
 
-        //VIEW
+        // RecyclerView, part of the view
         rvCoupons = findViewById(R.id.rvCoupons) //UI
-        rvCoupons?.layoutManager = LinearLayoutManager(this)
-
-        getCoupons()
-
+        rvCoupons.layoutManager = LinearLayoutManager(this)
     }
 
     override fun showCoupons(coupons: ArrayList<Coupon>?) {
         try {
-            rvCoupons!!.adapter = RecyclerCouponsAdapter(coupons!!, R.layout.card_coupon)
+            rvCoupons.adapter = RecyclerCouponsAdapter(coupons!!, R.layout.card_coupon)
         }catch (e: Exception){
             e.printStackTrace()
         }
-
     }
 
-    override fun getCoupons() {
-        couponPresenter?.getCoupons()
+    override fun showProgressBar() {
+        TODO("Not yet implemented")
     }
+
+    override fun hideProgressBar() {
+        TODO("Not yet implemented")
+    }
+
 }

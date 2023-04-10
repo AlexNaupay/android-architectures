@@ -8,4 +8,5 @@ interface CouponPresenter {
 
     //Interactor
     fun getCoupons()
+
 }

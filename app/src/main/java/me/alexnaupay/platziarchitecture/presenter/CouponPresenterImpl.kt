@@ -6,16 +6,20 @@ import me.alexnaupay.platziarchitecture.model.interactor.CouponsInteractorImpl
 import me.alexnaupay.platziarchitecture.view.CouponView
 
 
-class CouponPresenterImpl(var couponView: CouponView): CouponPresenter{
+class CouponPresenterImpl(private val couponView: CouponView): CouponPresenter, CouponsReceiverListener{
 
-    private var couponInteractor: CouponsInteractor = CouponsInteractorImpl(this)
-
-    override fun showCoupons(coupons: ArrayList<Coupon>) {
-        couponView.showCoupons(coupons)
-    }
+    private val couponInteractor: CouponsInteractor = CouponsInteractorImpl()
 
     override fun getCoupons() {
-        couponInteractor.getCouponsAPI()
+        this.couponInteractor.getCouponsAPI(this)
+    }
+
+    override fun onCouponsReceived(coupons: ArrayList<Coupon>) {
+        showCoupons(coupons = coupons)
+    }
+
+    override fun showCoupons(coupons: ArrayList<Coupon>) {
+        this.couponView.showCoupons(coupons)
     }
 
 }

@@ -4,9 +4,12 @@ import me.alexnaupay.platziarchitecture.entities.Coupon
 
 interface CouponView {
 
-    //Vista
+    /**
+     * Show coupons on list
+     */
     fun showCoupons(coupons: ArrayList<Coupon>?)
 
-    //Presentador
-    fun getCoupons()
+    fun showProgressBar()
+
+    fun hideProgressBar()
 }
