@@ -1,5 +1,6 @@
 package me.alexnaupay.platziarchitecture.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -57,6 +58,10 @@ class MainActivity : AppCompatActivity() {
         couponsViewModel.getSelectedCoupon()
             .observe(this, Observer { coupon: Coupon ->
                 Log.i("CLICK", coupon.title)
+
+                val detailActivityIntent = Intent(this, CouponDetailActivity::class.java)
+                detailActivityIntent.putExtra("COUPON", coupon)
+                this.startActivity(detailActivityIntent)
             })
     }
 }
