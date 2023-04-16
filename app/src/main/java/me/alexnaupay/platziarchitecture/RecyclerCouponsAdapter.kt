@@ -30,7 +30,9 @@ class RecyclerCouponsAdapter(
     }
 
     override fun onBindViewHolder(p0: CardCouponHolder, p1: Int) {
-        p0.setDataCard(couponsViewModel, p1)
+        // coupon at OR default coupon
+        val coupon = this.coupons?.get(p1) ?: Coupon(null)
+        p0.setCouponDataCard(couponsViewModel, coupon)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -50,9 +52,9 @@ class RecyclerCouponsAdapter(
             this.binding = binding
         }
 
-        fun setDataCard(couponsViewModel: CouponsViewModel, position: Int) {
-            binding.setVariable(BR.model, couponsViewModel)
-            binding.setVariable(BR.position, position)
+        fun setCouponDataCard(couponsViewModel: CouponsViewModel, coupon: Coupon) {
+            binding.setVariable(BR.modelv, couponsViewModel)
+            binding.setVariable(BR.coupon, coupon)
 
             binding.executePendingBindings()
         }

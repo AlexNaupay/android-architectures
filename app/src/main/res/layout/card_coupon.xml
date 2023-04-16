@@ -5,20 +5,20 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="model"
+        <variable name="modelv"
             type="me.alexnaupay.platziarchitecture.viewmodel.CouponsViewModel" />
 
-        <variable name="position" type="Integer" />
+        <variable name="coupon" type="me.alexnaupay.platziarchitecture.entities.Coupon" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvCoupon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="5dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="0dp"
-        android:onClick="@{() -> model.onItemClick(position)}">
+        android:onClick="@{() -> modelv.onItemClick(coupon)}">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
-                android:text="@{model.getCouponAt(position).title}"
+                android:text="@{coupon.title}"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +51,7 @@
                 app:layout_constraintHorizontal_bias="0.4"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:imageUrl="@{model.getCouponAt(position).image_url}"
+                app:imageUrl="@{coupon.image_url}"
                 tools:srcCompat="@tools:sample/avatars[14]" />
 
             <TextView
@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="24dp"
-                android:text="@{model.getCouponAt(position).descriptionShort}"
+                android:text="@{coupon.descriptionShort}"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -76,7 +76,7 @@
                 android:background="@drawable/rounded_corner_deadline"
                 android:gravity="center"
                 android:padding="7dp"
-                android:text="@{model.getCouponAt(position).endDate}"
+                android:text="@{coupon.endDate}"
                 android:textColor="#d11940"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -99,7 +99,7 @@
                 android:background="@drawable/rounded_corner_category"
                 android:gravity="left|center_vertical"
                 android:padding="7dp"
-                android:text="@{model.getCouponAt(position).category}"
+                android:text="@{coupon.category}"
                 android:textColor="#0071e7"
                 android:textSize="12sp"
                 android:textStyle="bold"

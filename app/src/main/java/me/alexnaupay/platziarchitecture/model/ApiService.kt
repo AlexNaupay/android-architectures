@@ -1,10 +1,10 @@
 package me.alexnaupay.platziarchitecture.model
 
-import com.google.gson.JsonObject
+import com.google.gson.JsonElement
 import retrofit2.Call
 import retrofit2.http.GET
 
 interface ApiService {
     @GET("getOffers/")
-    fun getCoupons(): Call<JsonObject>
+    fun getCoupons(): Call<JsonElement>
 }

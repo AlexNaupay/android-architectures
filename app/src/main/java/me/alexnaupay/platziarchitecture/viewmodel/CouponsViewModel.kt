@@ -44,8 +44,7 @@ class CouponsViewModel : ViewModel() {
     fun getSelectedCoupon(): MutableLiveData<Coupon> {
         return selected
     }
-    fun onItemClick(index: Int){
-        val coupon = getCouponAt(index)
+    fun onItemClick(coupon: Coupon){
         selected.value = coupon
     }
 }
