@@ -51,6 +51,7 @@
                 app:layout_constraintHorizontal_bias="0.4"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:imageUrl="@{model.getCouponAt(position).image_url}"
                 tools:srcCompat="@tools:sample/avatars[14]" />
 
             <TextView

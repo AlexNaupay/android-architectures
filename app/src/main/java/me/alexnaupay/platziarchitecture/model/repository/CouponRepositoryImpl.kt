@@ -41,7 +41,10 @@ class CouponRepositoryImpl: CouponRepository {
                 offersJsonArray?.forEach { jsonElement: JsonElement ->
                     val jsonObject = jsonElement.asJsonObject
                     val coupon = Coupon(jsonObject)
-                    couponsList.add(coupon)
+
+                    if (coupon.image_url.isNotBlank()){  // Add only valid urls
+                        couponsList.add(coupon)
+                    }
                 }
 
                 //VIEW
