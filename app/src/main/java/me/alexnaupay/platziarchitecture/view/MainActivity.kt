@@ -3,52 +3,49 @@ package me.alexnaupay.platziarchitecture.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.JsonElement
-import com.google.gson.JsonObject
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import me.alexnaupay.platziarchitecture.R
-import me.alexnaupay.platziarchitecture.RecyclerCouponsAdapter
 import me.alexnaupay.platziarchitecture.entities.Coupon
-import me.alexnaupay.platziarchitecture.model.ApiAdapter
-import me.alexnaupay.platziarchitecture.presenter.CouponPresenter
-import me.alexnaupay.platziarchitecture.presenter.CouponPresenterImpl
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import me.alexnaupay.platziarchitecture.viewmodel.CouponsViewModel
 
-class MainActivity : AppCompatActivity(), CouponView {
-    private lateinit var couponPresenter: CouponPresenter
-    private lateinit var rvCoupons: RecyclerView
+class MainActivity : AppCompatActivity(){
+
+
+    private var couponViewModel: CouponsViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
 
-        // Presenter
-        couponPresenter = CouponPresenterImpl(this)
-        couponPresenter.getCoupons()  // Get coupons
+        //VIEW
+        setupBindings(savedInstanceState)
 
-        // RecyclerView, part of the view
-        rvCoupons = findViewById(R.id.rvCoupons) //UI
-        rvCoupons.layoutManager = LinearLayoutManager(this)
+
     }
 
-    override fun showCoupons(coupons: ArrayList<Coupon>?) {
-        try {
-            rvCoupons.adapter = RecyclerCouponsAdapter(coupons!!, R.layout.card_coupon)
-        }catch (e: Exception){
-            e.printStackTrace()
-        }
+    fun setupBindings(savedInstanceState: Bundle?){
+        var activityMainBinding: me.alexnaupay.platziarchitecture.databinding.ActivityMainBinding
+                = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        couponViewModel = ViewModelProviders.of(this).get(CouponsViewModel::class.java)
+
+        activityMainBinding.setModel(couponViewModel)
+        setupListUpdate()
+
     }
 
-    override fun showProgressBar() {
-        TODO("Not yet implemented")
-    }
-
-    override fun hideProgressBar() {
-        TODO("Not yet implemented")
+    fun setupListUpdate(){
+        //CallCoupons
+        couponViewModel?.callCoupons()
+        //getCoupons - Lista de cupones
+        couponViewModel?.getCoupons()?.observe(this, Observer {
+                coupons: List<Coupon> ->
+            Log.w("COUPON", coupons.get(0).title)
+            couponViewModel?.setCouponsInRecyclerAdapter(coupons)
+        })
     }
 
 }

@@ -1,19 +1,31 @@
 package me.alexnaupay.platziarchitecture.model.repository
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import me.alexnaupay.platziarchitecture.entities.Coupon
 import me.alexnaupay.platziarchitecture.model.ApiAdapter
-import me.alexnaupay.platziarchitecture.presenter.CouponsReceiverListener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CouponRepositoryImpl() : CouponRepository {
+class CouponRepositoryImpl: CouponRepository {
 
-    override fun getCouponsApi(couponsReceiverCallback: CouponsReceiverListener) {
-        val coupons: ArrayList<Coupon> = ArrayList()
+    private var coupons = MutableLiveData<List<Coupon>>()
+    //Subject MutableLiveData
+    //Observers List Coupon
+    //Change List Coupon - MutableLiveData
+    //observe
+
+    override fun getCoupuns(): MutableLiveData<List<Coupon>> {
+        return coupons
+    }
+
+    //TODA LA LÓGICA DE CONEXIÓN
+    override fun callCoupunsAPI() {
+        //CONTROLLER
+        val couponsList: ArrayList<Coupon> = ArrayList()
         val apiAdapter = ApiAdapter()
         val apiService = apiAdapter.getClientService()
         val call = apiService.getCoupons()
@@ -21,10 +33,6 @@ class CouponRepositoryImpl() : CouponRepository {
         call.enqueue(object : Callback<JsonObject> {
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                 Log.e("ERROR: ", t.message.toString())
-
-                // coupons will be empty, if an error occurs
-                couponsReceiverCallback.onCouponsReceived(coupons)
-
                 t.stackTrace
             }
 
@@ -33,16 +41,12 @@ class CouponRepositoryImpl() : CouponRepository {
                 offersJsonArray?.forEach { jsonElement: JsonElement ->
                     val jsonObject = jsonElement.asJsonObject
                     val coupon = Coupon(jsonObject)
-
-                    if (coupon.image_url.isNotBlank()){  // Add only valid urls
-                        coupons.add(coupon)
-                    }
+                    couponsList.add(coupon)
                 }
 
-                // Call listener
-                couponsReceiverCallback.onCouponsReceived(coupons)
+                //VIEW
+                coupons.value = couponsList
             }
         })
     }
-
 }

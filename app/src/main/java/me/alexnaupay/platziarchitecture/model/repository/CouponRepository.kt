@@ -1,7 +1,10 @@
 package me.alexnaupay.platziarchitecture.model.repository
 
-import me.alexnaupay.platziarchitecture.presenter.CouponsReceiverListener
+import androidx.lifecycle.MutableLiveData
+import me.alexnaupay.platziarchitecture.entities.Coupon
 
 interface CouponRepository {
-    fun getCouponsApi(couponsReceiverCallback: CouponsReceiverListener)
+    fun getCoupuns(): MutableLiveData<List<Coupon>>
+    fun callCoupunsAPI()
+
 }
