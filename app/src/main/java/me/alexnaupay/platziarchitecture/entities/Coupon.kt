@@ -22,16 +22,16 @@ class Coupon(couponJson: JsonObject?) : Serializable {
 
     init {
         try {
-            id                  = couponJson!!.get(ID).asString
-            image_url           = couponJson!!.get(IMAGE_URL).asString
-            title               = couponJson!!.get(TITLE).asString
-            descriptionShort    = chunkWords(couponJson!!.get(DESCRIPTION_SHORT).asString, ' ', 5)
-            category            = chunkWords(couponJson!!.get(CATEGORY).asString, ',', 1)
-            description         = couponJson!!.get(DESCRIPTION).asString
-            offer               = couponJson!!.get(OFFER).asString
-            website             = couponJson!!.get(WEBSITE).asString
-            endDate             = getFormatDate(couponJson!!.get(END_DATE).asString)
-            url                 = couponJson!!.get(URL).asString
+            id                  = couponJson?.get(ID)?.asString ?: "00"
+            image_url           = couponJson?.get(IMAGE_URL)?.asString ?: "https://dummyimage.com/300x300/c77ec7/ffffff.jpg"
+            title               = couponJson?.get(TITLE)?.asString ?: "Offer"
+            descriptionShort    = chunkWords(couponJson?.get(DESCRIPTION_SHORT)?.asString ?: "The best Offer", ' ', 5)
+            category            = chunkWords(couponJson?.get(CATEGORY)?.asString ?: "All", ',', 1)
+            description         = couponJson?.get(DESCRIPTION)?.asString ?: "The best Offer"
+            offer               = couponJson?.get(OFFER)?.asString ?: "It's the only chance"
+            website             = couponJson?.get(WEBSITE)?.asString ?: "https://www.platzi.com"
+            endDate             = getFormatDate(couponJson?.get(END_DATE)?.asString ?: Calendar.getInstance().time.toString())
+            url                 = couponJson?.get(URL)?.asString ?: "https://www.platzi.com"
         }catch (e: Exception){
             e.printStackTrace()
         }
@@ -40,16 +40,16 @@ class Coupon(couponJson: JsonObject?) : Serializable {
     }
 
     companion object {
-        private val ID                  = "lmd_id"
-        private val IMAGE_URL           = "image_url"
-        private val TITLE               = "title"
-        private val DESCRIPTION_SHORT   = "offer_text"
-        private val CATEGORY            = "categories"
-        private val DESCRIPTION         = "description"
-        private val OFFER               = "offer"
-        private val WEBSITE             = "store"
-        private val END_DATE            = "end_date"
-        private val URL                 = "url"
+        private const val ID                  = "lmd_id"
+        private const val IMAGE_URL           = "image_url"
+        private const val TITLE               = "title"
+        private const val DESCRIPTION_SHORT   = "offer_text"
+        private const val CATEGORY            = "categories"
+        private const val DESCRIPTION         = "description"
+        private const val OFFER               = "offer"
+        private const val WEBSITE             = "store"
+        private const val END_DATE            = "end_date"
+        private const val URL                 = "url"
     }
 
     private fun getFormatDate(dateCoupon:String):String {

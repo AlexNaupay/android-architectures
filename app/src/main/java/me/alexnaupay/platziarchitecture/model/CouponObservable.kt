@@ -8,7 +8,8 @@ import me.alexnaupay.platziarchitecture.model.repository.CouponRepositoryImpl
 
 class CouponObservable: BaseObservable() {
 
-    private var couponRepository: CouponRepository = CouponRepositoryImpl()
+    private val couponRepository: CouponRepository = CouponRepositoryImpl()
+
     //Repositorio
     fun callCoupons(){
         couponRepository.callCoupunsAPI()

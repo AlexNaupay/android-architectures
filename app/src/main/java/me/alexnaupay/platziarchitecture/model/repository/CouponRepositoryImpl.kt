@@ -48,7 +48,7 @@ class CouponRepositoryImpl: CouponRepository {
                 }
 
                 //VIEW
-                coupons.value = couponsList
+                coupons.value = couponsList.subList(7,15)
             }
         })
     }

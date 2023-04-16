@@ -12,8 +12,10 @@ import me.alexnaupay.platziarchitecture.model.CouponObservable
 
 class CouponsViewModel : ViewModel() {
 
-    private var couponObservable: CouponObservable = CouponObservable()
+    private val couponObservable = CouponObservable()
     private var recyclerCouponsAdapter: RecyclerCouponsAdapter? = null
+
+    private val selected:MutableLiveData<Coupon> = MutableLiveData<Coupon>()
 
     fun callCoupons() {
         couponObservable.callCoupons()
@@ -23,8 +25,9 @@ class CouponsViewModel : ViewModel() {
         return couponObservable.getCoupons()
     }
 
+
     fun setCouponsInRecyclerAdapter(coupons: List<Coupon>) {
-        recyclerCouponsAdapter?.setCounponsList(coupons)
+        recyclerCouponsAdapter?.setCouponsList(coupons)
         recyclerCouponsAdapter?.notifyDataSetChanged()
     }
 
@@ -34,8 +37,16 @@ class CouponsViewModel : ViewModel() {
     }
 
     fun getCouponAt(position: Int): Coupon? {
-        var coupons: List<Coupon>? = couponObservable.getCoupons().value
+        val coupons: List<Coupon>? = couponObservable.getCoupons().value
         return coupons?.get(position)
+    }
+
+    fun getSelectedCoupon(): MutableLiveData<Coupon> {
+        return selected
+    }
+    fun onItemClick(index: Int){
+        val coupon = getCouponAt(index)
+        selected.value = coupon
     }
 }
 
